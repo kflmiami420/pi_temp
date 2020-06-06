@@ -27,13 +27,6 @@ bmp = adafruit_bmp3xx.BMP3XX_I2C(i2c)
 # cs = DigitalInOut(board.D5)
 # bmp = adafruit_bmp3xx.BMP3XX_SPI(spi, cs)
 
-#configuration stuff.
-bmp.sea_level_pressure = 1010.1597 #set this for your area! This is in hPa, you can use data from Weather Underground but that requires conversion as they use inch of mercury.
-bmp.pressure_oversampling = 8
-bmp.temperature_oversampling = 2
-
-refresh_rate_sec = 3
-
 def c_to_f(c_temp):
 # convert temp from Celsius to Fahrenheit.
     return((c_temp * (9/5)) + 32)
@@ -41,12 +34,6 @@ def c_to_f(c_temp):
 def m_to_ft(meter):
 # convert meter to feet.
     return(meter * 3.28084)
-
-my_url = "http://localhost:3030/widgets/welcome"
-hello_data = { "auth_token": "YOUR_AUTH_TOKEN", "text": "Hello Richard!"}
-
-temp_url = "http://localhost:3030/widgets/temp"
-another_url = "http://localhost:3030/widgets/synergy"
 
 def get():
 # send a get request to see if Smashing Dashboard is up.
@@ -60,8 +47,25 @@ def get():
 def post_data(url, data, connected):
 # send a post request to Smashing Dashboard at the url with the json data.
     if connected:
-        return requests.post(url, json = data)
+        try:
+            return requests.post(url, json = data)
+        except requests.exceptions.Timeout:
+            print('tbd')
+        except requests.exceptions.RequestException as e
+            print('tbd')
 
+#configuration stuff.
+bmp.sea_level_pressure = 1010.1597 #set this for your area! This is in hPa, you can use data from Weather Underground but that requires conversion as they use inch of mercury.
+bmp.pressure_oversampling = 8
+bmp.temperature_oversampling = 2
+
+refresh_rate_sec = 3
+
+my_url = "http://localhost:3030/widgets/welcome"
+hello_data = { "auth_token": "YOUR_AUTH_TOKEN", "text": "Hello Richard!"}
+
+temp_url = "http://localhost:3030/widgets/temp"
+another_url = "http://localhost:3030/widgets/synergy"
 
 print('Verifying if Smashing Dashboard temp_dashboard is up..')
 connected = get()
