@@ -51,7 +51,7 @@ def post_data(url, data, connected):
             return requests.post(url, json = data)
         except requests.exceptions.Timeout:
             print('tbd')
-        except requests.exceptions.RequestException as e
+        except requests.exceptions.RequestException as e:
             print('tbd')
 
 #configuration stuff.
@@ -64,8 +64,8 @@ refresh_rate_sec = 3
 my_url = "http://localhost:3030/widgets/welcome"
 hello_data = { "auth_token": "YOUR_AUTH_TOKEN", "text": "Hello Richard!"}
 
-temp_url = "http://localhost:3030/widgets/temp"
-another_url = "http://localhost:3030/widgets/synergy"
+#temp_url = "http://localhost:3030/widgets/temp"
+another_url = "http://localhost:3030/widgets/temp"
 
 print('Verifying if Smashing Dashboard temp_dashboard is up..')
 connected = get()
@@ -80,7 +80,7 @@ while True:
     tempData = {"auth_token": "YOUR_AUTH_TOKEN", "points": [{"x": time.strftime("%H:%M:%S"), "y": "%5.2f" % f_temp}]}
     tempData2 = {"auth_token": "YOUR_AUTH_TOKEN", "value": "%5.2f" % f_temp}
 
-    response = post_data(temp_url, tempData, connected)
+    #response = post_data(temp_url, tempData, connected)
     response = post_data(another_url, tempData2, connected)
     print("Altitude: %4.2f meters  %4.2f feet" % (bmp.altitude, m_to_ft(bmp.altitude)))
     time.sleep(refresh_rate_sec)
